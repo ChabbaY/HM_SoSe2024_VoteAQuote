@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  voteaquote_database:
+    container_name: voteaquote_database
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=QPw3n4B6XTMCcXPq2R923sa6H
+      - MYSQL_DATABASE=voteaquote
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    
+  voteaquote_phpmyadmin:
+    container_name: voteaquote_phpmyadmin
+    image: phpmyadmin
+    environment:
+      PMA_HOST: voteaquote_database
+    ports:
+      - "8080:80"
+  
+  voteaquote_api:
+    container_name: voteaquote_api
+    image: ${DOCKER_REGISTRY-}voteaquote_api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:80
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+    ports:
+      - "50000:80"
+    depends_on:
+      - voteaquote_database
+
+  voteaquote_angular:
+    container_name: voteaquote_angular
+    image: ${DOCKER_REGISTRY-}voteaquote_angular
+    build: ./Angular
+    ports:
+      - "4200:80"
+    depends_on:
+      - voteaquote_api

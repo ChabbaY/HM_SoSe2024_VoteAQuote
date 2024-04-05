@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API</name>
+    </assembly>
+    <members>
+        <member name="M:API.Controllers.AuthorController.GetAllAuthors">
+            <summary>
+            Returns all authors.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.AuthorController.GetAuthor(System.Int32)">
+            <summary>
+            Returns the author with a given id.
+            </summary>
+            <param name="aid">AuthorId</param>
+        </member>
+        <member name="M:API.Controllers.AuthorController.AddAuthor(API.DataObjects.Author)">
+            <summary>
+            Adds an author.
+            </summary>
+            <param name="value">new Author</param>
+        </member>
+        <member name="M:API.Controllers.AuthorController.UpdateAuthor(System.Int32,API.DataObjects.Author)">
+            <summary>
+            Updates an author.
+            </summary>
+            <param name="aid">AuthorId</param>
+            <param name="value">new Author</param>
+        </member>
+        <member name="M:API.Controllers.AuthorController.DeleteAuthor(System.Int32)">
+            <summary>
+            Delete an author.
+            Blocks if referenced by a Quote.
+            </summary>
+            <param name="aid">AuthorId</param>
+        </member>
+        <member name="M:API.Controllers.QuoteController.GetAllQuotes(System.Int32)">
+            <summary>
+            Returns all quotes of one author.
+            </summary>
+            <param name="aid">AuthorId</param>
+        </member>
+        <member name="M:API.Controllers.QuoteController.GetQuote(System.Int32,System.Int32)">
+            <summary>
+            Returns the quote with a given id of one author.
+            </summary>
+            <param name="aid">AuthorId</param>
+            <param name="qid">QuoteId</param>
+        </member>
+        <member name="M:API.Controllers.QuoteController.AddQuote(System.Int32,API.DataObjects.Quote)">
+            <summary>
+            Adds a quote to one author.
+            </summary>
+            <param name="aid">AuthorId</param>
+            <param name="value">new Quote</param>
+        </member>
+        <member name="M:API.Controllers.QuoteController.UpdateQuote(System.Int32,System.Int32,API.DataObjects.Quote)">
+            <summary>
+            Updates a quote of one author.
+            </summary>
+            <param name="aid">AuthorId</param>
+            <param name="qid">QuoteId</param>
+            <param name="value">new Quote</param>
+        </member>
+        <member name="M:API.Controllers.QuoteController.DeleteQuote(System.Int32,System.Int32)">
+            <summary>
+            Delete a quote of one author.
+            Blocks if referenced by a Vote.
+            </summary>
+            <param name="aid">AuthorId</param>
+            <param name="qid">QuoteId</param>
+        </member>
+        <member name="M:API.Controllers.VoteController.GetAllVotes(System.Int32)">
+            <summary>
+            Returns all votes of one quote.
+            </summary>
+            <param name="qid">QuoteId</param>
+        </member>
+        <member name="M:API.Controllers.VoteController.GetVoteAggregation(System.Int32)">
+            <summary>
+            Returns the sum of all votes of one quote.
+            </summary>
+            <param name="qid">QuoteId</param>
+        </member>
+        <member name="M:API.Controllers.VoteController.GetVote(System.Int32,System.String)">
+            <summary>
+            Returns the vote of one quote. Associated to current user.
+            </summary>
+            <param name="qid">QuoteId</param>
+            <param name="user">user string</param>
+        </member>
+        <member name="M:API.Controllers.VoteController.AddVote(System.Int32,API.DataObjects.Vote,System.String)">
+            <summary>
+            Adds a vote to one quote. Associated to current user.
+            </summary>
+            <param name="qid">QuoteId</param>
+            <param name="value">new Vote</param>
+            <param name="user">user string</param>
+        </member>
+        <member name="M:API.Controllers.VoteController.UpdateVote(System.Int32,API.DataObjects.Vote,System.String)">
+            <summary>
+            Updates a vote of one quote. Associated to current user.
+            </summary>
+            <param name="qid">QuoteId</param>
+            <param name="value">new Vote</param>
+            <param name="user">user string</param>
+        </member>
+        <member name="M:API.Controllers.VoteController.DeleteVote(System.Int32,System.String)">
+            <summary>
+            Delete a vote of one quote. Associated to current user.
+            </summary>
+            <param name="qid">QuoteId</param>
+            <param name="user">user string</param>
+        </member>
+        <member name="T:API.DataAccess.Context">
+            <summary>
+            Database abstraction for the Base API
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:API.DataAccess.Context.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{API.DataAccess.Context})">
+            <summary>
+            Database abstraction for the Base API
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:API.DataAccess.Context.Authors">
+            <summary>
+            Authors
+            </summary>
+        </member>
+        <member name="P:API.DataAccess.Context.Quotes">
+            <summary>
+            Quotes
+            </summary>
+        </member>
+        <member name="P:API.DataAccess.Context.Votes">
+            <summary>
+            Votes
+            </summary>
+        </member>
+        <member name="T:API.Program">
+            <summary>
+            Main class of the API
+            </summary>
+        </member>
+        <member name="M:API.Program.Main(System.String[])">
+            <summary>
+            Entry point
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:API.Startup">
+            <summary>
+            Registering services for the API
+            </summary>
+            <param name="configuration">config for connection strings</param>
+        </member>
+        <member name="M:API.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Registering services for the API
+            </summary>
+            <param name="configuration">config for connection strings</param>
+        </member>
+        <member name="M:API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>
