@@ -43,7 +43,7 @@ jobs:
         context: ./API
         file: ./API/Dockerfile
         push: true
-        tags: voteaquote_api:latest
+        tags: chabbay/voteaquote_api:latest
         labels: ${{ steps.meta.outputs.labels }}
 
     - name: Build and push Angular Docker Image
@@ -53,7 +53,7 @@ jobs:
         context: ./Angular
         file: ./Angular/Dockerfile
         push: true
-        tags: voteaquote_angular:latest
+        tags: chabbay/voteaquote_angular:latest
         labels: ${{ steps.meta.outputs.labels }}
 
     - name: Generate artifact attestation for API
