@@ -55,17 +55,3 @@ jobs:
         push: true
         tags: chabbay/voteaquote_angular:latest
         labels: ${{ steps.meta.outputs.labels }}
-
-    - name: Generate artifact attestation for API
-      uses: actions/attest-build-provenance@v1
-      with:
-        subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
-        subject-digest: ${{ steps.push_api.outputs.digest }}
-        push-to-registry: true
-
-    - name: Generate artifact attestation for Angular
-      uses: actions/attest-build-provenance@v1
-      with:
-        subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
-        subject-digest: ${{ steps.push_angular.outputs.digest }}
-        push-to-registry: true
