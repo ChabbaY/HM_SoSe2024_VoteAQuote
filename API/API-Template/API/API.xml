@@ -140,6 +140,18 @@
             Votes
             </summary>
         </member>
+        <member name="T:API.Migrations.migration_v0">
+            <inheritdoc />
+        </member>
+        <member name="M:API.Migrations.migration_v0.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:API.Migrations.migration_v0.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:API.Migrations.migration_v0.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:API.Program">
             <summary>
             Main class of the API

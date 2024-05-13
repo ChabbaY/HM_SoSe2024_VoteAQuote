@@ -1,0 +1,7 @@
+<div class="quote_section" *ngFor="let author_quote of author_quotes">
+  <font color="{{author_quote.color}}">
+    <cite>{{author_quote.author.givenName}} {{author_quote.author.name}} {{author_quote.author.lifetime}}</cite>
+    <p *ngFor="let quote of author_quote.quotes"><q>{{quote.content}}</q></p>
+  </font>
+</div>
+  

@@ -6,7 +6,7 @@ using API.DataObjects;
 
 namespace API.Controllers;
 
-[Route("quotes")]
+[Route("authors/{aid}/quotes")]
 [ApiController]
 public class QuoteController(Context context) : ControllerBase {
     /// <summary>

@@ -1,0 +1,11 @@
+You vote as: <input type="text" [(value)]="username" />
+<br /><br />
+<div class="quote_section" *ngFor="let voted_quote of voted_quotes">
+  <font color="{{voted_quote.color}}">
+    {{voted_quote.vote}} Punkte - 
+    <q>{{voted_quote.quote.content}}</q> - 
+    <cite>{{voted_quote.author.givenName}} {{voted_quote.author.name}} {{voted_quote.author.lifetime}}</cite>
+  </font><br />
+  <button (click)="like(voted_quote.quote.id)">Like</button><br />
+  <button (click)="dislike(voted_quote.quote.id)">Dislike</button>
+</div>
