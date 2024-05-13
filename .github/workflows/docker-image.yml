@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the API Docker Image
+      run: docker build ./API --file API/Dockerfile --tag voteaquote_api:latest
+    - name: Build the Angular Docker Image
+      run: docker build ./Angular --file Angular/Dockerfile --tag voteaquote_angular:latest
