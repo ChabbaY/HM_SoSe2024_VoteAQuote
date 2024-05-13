@@ -15,6 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the API Docker Image
-      run: docker build . --file API/Dockerfile --tag voteaquote_api:latest
+      run: docker build ./API --file API/Dockerfile --tag voteaquote_api:latest
     - name: Build the Angular Docker Image
-      run: docker build . --file Angular/Dockerfile --tag voteaquote_angular:latest
+      run: docker build ./Angular --file Angular/Dockerfile --tag voteaquote_angular:latest
