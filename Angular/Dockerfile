@@ -1,12 +1,13 @@
 #build
-FROM node:latest as build
+FROM node:18-alpine as build
 WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
 RUN npm install
 RUN npm run build
 
 #run
-FROM nginx:latest
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /usr/local/app/dist/angular /usr/share/nginx/html
-EXPOSE 80
+FROM node:18-alpine
+WORKDIR /usr/app
+COPY --from=build /usr/local/app/dist/angular ./
+CMD node server/server.mjs
+EXPOSE 4000
