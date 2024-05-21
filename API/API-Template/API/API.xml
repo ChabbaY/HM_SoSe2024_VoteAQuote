@@ -71,6 +71,11 @@
             <param name="aid">AuthorId</param>
             <param name="qid">QuoteId</param>
         </member>
+        <member name="M:API.Controllers.RankingController.GetVoteRanking">
+            <summary>
+            Returns the ranking (all quotes with votes, sorted).
+            </summary>
+        </member>
         <member name="M:API.Controllers.VoteController.GetAllVotes(System.Int32)">
             <summary>
             Returns all votes of one quote.

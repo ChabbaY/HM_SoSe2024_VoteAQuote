@@ -24,13 +24,14 @@ services:
   
   voteaquote_api:
     container_name: voteaquote_api
-    image: ${DOCKER_REGISTRY-}voteaquote_api
+#   image: ${DOCKER_REGISTRY-}voteaquote_api
+    image: chabbay/voteaquote_api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://*:80
-    build:
-      context: ./API
-      dockerfile: Dockerfile
+#   build:
+#     context: ./API
+#     dockerfile: Dockerfile
     ports:
       - "50000:80"
     depends_on:
@@ -38,8 +39,9 @@ services:
 
   voteaquote_angular:
     container_name: voteaquote_angular
-    image: ${DOCKER_REGISTRY-}voteaquote_angular
-    build: ./Angular
+#   image: ${DOCKER_REGISTRY-}voteaquote_angular
+    image: chabbay/voteaquote_angular
+#   build: ./Angular
     ports:
       - "4200:80"
     depends_on:
