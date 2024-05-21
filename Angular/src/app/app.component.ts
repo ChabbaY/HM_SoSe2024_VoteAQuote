@@ -12,8 +12,9 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'Vote a Quote';
 
-  home = { name: "Ranking", target: "ranking" };
+  home = { name: "Home", target: "home" };
   items = [
+    { name: "Ranking", target: "ranking" },
     { name: "Autoren", target: "autoren" },
     { name: "Zitate", target: "zitate" }
   ];
