@@ -32,7 +32,7 @@ export class RankingService {
     });
   }
 
-  getRanking() {
-    return this.http.get<VotedQuote[]>('http://localhost:50000/ranking');
+  getRanking(user: string) {
+    return this.http.get<VotedQuote[]>(`http://localhost:50000/ranking/${user}`);
   }
 }

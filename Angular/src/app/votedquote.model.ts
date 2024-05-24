@@ -6,4 +6,5 @@ export interface VotedQuote {
     quote: Quote;
     vote: number;
     color: string;
+    uservote: number;
 }

@@ -1,15 +1,17 @@
 import { NgForOf } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { RankingService } from './ranking.service';
-import { Subscription } from 'rxjs';
+import { Subscription, catchError, switchMap } from 'rxjs';
 import { VotedQuote } from '../votedquote.model';
-import { AutorenService } from '../autoren/autoren.service';
-import { ZitateService } from '../zitate/zitate.service';
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-ranking',
   standalone: true,
-  imports: [NgForOf],
+  imports: [
+    NgForOf,
+    FormsModule
+  ],
   templateUrl: './ranking.component.html',
   styleUrl: './ranking.component.scss'
 })
@@ -17,23 +19,20 @@ export class RankingComponent implements OnInit, OnDestroy {
   public voted_quotes: VotedQuote[] = [];
   public username: string = "steve";
   private subs: Subscription[] = [];
-  constructor(private autorenService: AutorenService, private zitateService: ZitateService,
-    private rankingService: RankingService) {}
+  constructor(private rankingService: RankingService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.refresh();
   }
 
   refresh() {
-    this.subs.push(this.rankingService.getRanking().subscribe(
+    this.subs.push(this.rankingService.getRanking(this.username).subscribe(
       (result) => {
-        /*result.forEach((votedquote) => {
-          votedquote.color = this.randomColor();
-        });*/
         this.voted_quotes = result;
         this.voted_quotes.forEach((votedquote) => {
           votedquote.color = this.randomColor();
-        })
+        });
+        this.changeDetector.markForCheck();
       },
       (error) => {
         console.log(error);
@@ -42,30 +41,37 @@ export class RankingComponent implements OnInit, OnDestroy {
   }
 
   like(quoteId: number) {
-    this.subs.push(this.rankingService.getVote(this.username, quoteId).subscribe(
-      () => {
-        this.subs.push(this.rankingService.updateVote(this.username, quoteId, 1).subscribe());
-      },
-      () => {
-        this.subs.push(this.rankingService.createVote(this.username, quoteId, 1).subscribe());
-      }
-    ));
-    this.voted_quotes.find(v => v.quote.id == quoteId)!.vote = 1;
-
-    this.refresh();
+    this.subs.push(this.rankingService.getVote(this.username, quoteId).pipe(
+      switchMap(() => {
+        return this.rankingService.updateVote(this.username, quoteId, 1);
+      }),
+      catchError(() => {
+        return this.rankingService.createVote(this.username, quoteId, 1);
+      })
+    ).subscribe(() => {
+      this.updateLocalVote(quoteId, 1);
+    }));
   }
   dislike(quoteId: number) {
-    this.subs.push(this.rankingService.getVote(this.username, quoteId).subscribe(
-      () => {
-        this.subs.push(this.rankingService.updateVote(this.username, quoteId, -1).subscribe());
-      },
-      () => {
-        this.subs.push(this.rankingService.createVote(this.username, quoteId, -1).subscribe());
-      }
-    ));
-    this.voted_quotes.find(v => v.quote.id == quoteId)!.vote = 1;
+    this.subs.push(this.rankingService.getVote(this.username, quoteId).pipe(
+      switchMap(() => {
+        return this.rankingService.updateVote(this.username, quoteId, -1);
+      }),
+      catchError(() => {
+        return this.rankingService.createVote(this.username, quoteId, -1);
+      })
+    ).subscribe(() => {
+      this.updateLocalVote(quoteId, -1);
+    }));
+  }
 
-    this.refresh();
+  updateLocalVote(quoteId: number, voteValue: number) {
+    const votedQuote = this.voted_quotes.find(v => v.quote.id === quoteId);
+    if (votedQuote) {
+      votedQuote.vote += voteValue - votedQuote.uservote;
+      votedQuote.uservote = voteValue;
+      this.changeDetector.markForCheck();
+    }
   }
 
   ngOnDestroy(): void {

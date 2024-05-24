@@ -5,4 +5,5 @@ public class VotedQuote {
     public Quote Quote { get; set; }
     public int Vote { get; set; }
     public string Color { get; set; }
+    public int Uservote { get; set; }
 }

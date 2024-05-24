@@ -1,4 +1,4 @@
-You vote as: <input type="text" [(value)]="username" />
+You vote as: <input type="text" [(ngModel)]="username" />
 <br /><br />
 <div class="quote_section" *ngFor="let voted_quote of voted_quotes">
   <font color="{{voted_quote.color}}">
@@ -6,6 +6,6 @@ You vote as: <input type="text" [(value)]="username" />
     <q>{{voted_quote.quote.content}}</q> - 
     <cite>{{voted_quote.author.givenName}} {{voted_quote.author.name}} {{voted_quote.author.lifetime}}</cite>
   </font><br />
-  <button (click)="like(voted_quote.quote.id)">Like</button><br />
-  <button (click)="dislike(voted_quote.quote.id)">Dislike</button>
+  <button [className]="(voted_quote.uservote) == 1 ? 'highlight' : ''" (click)="like(voted_quote.quote.id)">Like</button><br />
+  <button [className]="(voted_quote.uservote) == -1 ? 'highlight' : ''" (click)="dislike(voted_quote.quote.id)">Dislike</button>
 </div>
